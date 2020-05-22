@@ -73,4 +73,6 @@ dependencies {
     //alertdialog and toast
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
     implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
+
+
 }

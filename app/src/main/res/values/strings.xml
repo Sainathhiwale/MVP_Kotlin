@@ -21,4 +21,8 @@
     <string name="book">Book</string>
     <string name="cover_photos">CoverPhoto</string>
     <string name="exit">Exit</string>
+    <string name="user_list">User List</string>
+    <string name="delete_user">Delete User</string>
+    <string name="update_user">Update User</string>
+    <string name="get_user">Get User</string>
 </resources>
