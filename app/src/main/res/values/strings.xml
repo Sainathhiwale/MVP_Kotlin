@@ -15,4 +15,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="mvp_kotlin">MVP</string>
+    <string name="users">Users</string>
+    <string name="activities">Activities</string>
+    <string name="authors">Authers</string>
+    <string name="book">Book</string>
+    <string name="cover_photos">CoverPhoto</string>
+    <string name="exit">Exit</string>
 </resources>

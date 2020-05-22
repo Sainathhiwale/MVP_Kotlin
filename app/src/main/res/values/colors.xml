@@ -6,4 +6,22 @@
     <color name="colorBlack">#000</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorPrimaryLite">#FF4081</color>
-</resources>
+
+
+    <color name="black">#000</color>
+    <color name="blue_dark">#1C57AF</color>
+    <color name="colorwhite">#FFF</color>
+    <color name="lightgray">#dcdada</color>
+    <color name="colorGreen">#4CAF50</color>
+    <color name="colorblack">#000</color>
+    <color name="colorLite">#E6DAD3</color>
+
+    <color name="gradientOrange">#FF416C</color>
+    <color name="gradientViolet">#8A52E9</color>
+    <color name="gradientLightYellow">#FFA72F</color>
+    <color name="gradientLightOrange">#FF641A</color>
+    <color name="gradientLightYellow2">#FFC92B</color>
+    <color name="gradientLightOrange2">#FF7765</color>
+    <color name="gradientOrange3">#F7A23C</color>
+    <color name="gradientLightBlue">#376DF6</color>
+    <color name="gradientLightGreen">#21E8AC</color></resources>
