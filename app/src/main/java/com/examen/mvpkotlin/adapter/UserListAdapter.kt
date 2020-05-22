@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.examen.mvpkotlin.R
 import com.examen.mvpkotlin.data.model.UserListInfo
 import com.examen.mvpkotlin.utils.AppConstants
 
-class UserListAdapter: RecyclerView.Adapter<UserListAdapter.MyViewHolder>() {
+class UserListAdapter(activity: FragmentActivity?, userListInfoItem: UserListInfo?) :
+    RecyclerView.Adapter<UserListAdapter.MyViewHolder>() {
      var context:Context ? = null
      var getUserList: List<UserListInfo.UserListInfoItem>? = null
 
@@ -26,28 +28,23 @@ class UserListAdapter: RecyclerView.Adapter<UserListAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val getUser: UserListInfo.UserListInfoItem = getUserList!!.get(position)
+        var getUser: UserListInfo.UserListInfoItem = getUserList!!.get(position)
         if (getUser.iD!=0){
-            holder.tv_UserId?.setText(getUser.iD)
+            holder.tv_UserId.setText(getUser.iD)
         }else{
-            holder.tv_UserId?.setText(AppConstants.EMPTY)
+            holder.tv_UserId.setText(AppConstants.EMPTY)
         }
-        if (getUser.userName!=null){
-            holder.tv_UserName?.setText(getUser.userName)
-        }else{
-            holder.tv_UserName?.setText(AppConstants.EMPTY)
-        }
-        if (getUser.password!=null){
-            holder.tv_Password?.setText(getUser.password)
-        }else{
-            holder.tv_Password?.setText(AppConstants.EMPTY)
-        }
+
+            holder.tv_UserName.setText(getUser.userName)
+
+            holder.tv_Password.setText(getUser.password)
+
     }
 
 
     class MyViewHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!){
-        var  tv_UserId :TextView ? = null
-        var tv_UserName :TextView ? = null
-        var tv_Password : TextView ? = null
+        var  tv_UserId :TextView = itemView!!.findViewById(R.id.tv_UserId)
+        var tv_UserName :TextView = itemView!!.findViewById(R.id.tv_UserName)
+        var tv_Password : TextView = itemView!!.findViewById(R.id.tv_Password)
     }
 }

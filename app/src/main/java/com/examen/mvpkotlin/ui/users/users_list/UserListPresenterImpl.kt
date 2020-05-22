@@ -24,7 +24,7 @@ class UserListPresenterImpl : UserListContract.UserListPresenter ,UserListContra
         }
     }
 
-    override fun onUserListFinished(userListInfoItem: UserListInfo.UserListInfoItem) {
+    override fun onUserListFinished(userListInfoItem: UserListInfo?) {
        userListView!!.setUserListInfoData(userListInfoItem)
     }
 

@@ -5,7 +5,7 @@ import com.examen.mvpkotlin.data.model.UserListInfo
 interface UserListContract {
 
     interface UserListView{
-        fun setUserListInfoData(userListInfoItem: UserListInfo.UserListInfoItem)
+        fun setUserListInfoData(userListInfoItem: UserListInfo?)
         fun onResponseFailure(throwable: Throwable)
     }
 
@@ -16,7 +16,7 @@ interface UserListContract {
 
     interface UserListIntractor{
         interface OnUserListFinishedListener{
-            fun onUserListFinished(userListInfoItem: UserListInfo.UserListInfoItem)
+            fun onUserListFinished(userListInfoItem: UserListInfo?)
             fun onUserListFailure(throwable: Throwable)
         }
         fun getUserListInfoData(onUserListFinishedListener: OnUserListFinishedListener)

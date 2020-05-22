@@ -15,6 +15,6 @@ interface ApiInterface {
     fun createUser(@Body loginRequest:LoginRequest):Call<LoginRequest>
 
     @GET(EndPoints.USERLIST)
-    fun getUserList(userListInfo: UserListInfo):Call<UserListInfo.UserListInfoItem>
+    fun getUserList(): Call<UserListInfo>
 
 }
