@@ -14,25 +14,35 @@ import com.examen.kotlinretrofit.utils.Validation
 import com.examen.mvpkotlin.MainActivity
 import com.examen.mvpkotlin.R
 import com.examen.mvpkotlin.data.model.LoginRequest
+import com.examen.mvpkotlin.data.prefs.DataManager
 import com.examen.mvpkotlin.data.prefs.SharedPrefsHelper
+import com.examen.mvpkotlin.myapps.AppController
 import com.examen.mvpkotlin.utils.AppConstants
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jetbrains.anko.alert
-import org.jetbrains.anko.intentFor
 
 class SignInActivity : AppCompatActivity() ,LoginContract.LoginView,View.OnClickListener{
      var btSignIn:Button?=null
      var presenterImpl:LoginPresenterImpl?= null
      var prefSharedHelpler:SharedPrefsHelper?=null
+     var dataManager:DataManager?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         btSignIn = findViewById(R.id.btSignIn) as Button
         btSignIn!!.setOnClickListener(this)
         prefSharedHelpler = SharedPrefsHelper(this)
+        dataManager = (application as AppController).getDataManager()
+        if (dataManager!!.getLoggedInMode(true)!!) {
+            val intent = Intent(this@SignInActivity, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        } else {
+            presenterImpl = LoginPresenterImpl(this@SignInActivity)
+        }
 
     }
 
@@ -107,8 +117,8 @@ class SignInActivity : AppCompatActivity() ,LoginContract.LoginView,View.OnClick
              prefSharedHelpler!!.putUserEmail(loginRequest.userName.toString())
              val intent = Intent(this@SignInActivity,MainActivity::class.java)
              intent.putExtra(AppConstants.EMAIL,loginRequest.userName)
-           /*  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)*/
+             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
              startActivity(intent)
              //startActivity(intentFor<MainActivity>())
              Toast.makeText(this@SignInActivity,""+loginRequest.userName,Toast.LENGTH_LONG).show()

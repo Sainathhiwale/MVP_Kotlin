@@ -11,6 +11,10 @@ class LoginPresenterImpl:LoginContract.LoginPresenter,LoginContract.LoginIntract
        this.getLoginInIntractor =getLoginInIntractor
    }
 
+    constructor(loginView: LoginContract.LoginView?) {
+        this.loginView = loginView
+    }
+
 
     override fun onDestroy() {
       loginView=null
