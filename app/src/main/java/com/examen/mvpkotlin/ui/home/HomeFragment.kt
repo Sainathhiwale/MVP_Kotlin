@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import com.examen.mvpkotlin.R
 import com.examen.mvpkotlin.ui.users.UsersFragment
-import com.sdsmdg.tastytoast.TastyToast
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -21,6 +23,7 @@ class HomeFragment : Fragment(), View.OnClickListener {
      var cv_Books:CardView?=null
      var cv_CoversPhotos:CardView?=null
      var cv_Exits:CardView?=null
+     var toolbar:Toolbar ? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -31,15 +34,25 @@ class HomeFragment : Fragment(), View.OnClickListener {
         cv_Books = view?.findViewById(R.id.cv_Books)
         cv_CoversPhotos = view?.findViewById(R.id.cv_CoversPhotos)
         cv_Exits = view?.findViewById(R.id.cv_Exits)
+        toolbar = view?.findViewById(R.id.toolbar)
+        //onclicklistener
         cv_Users?.setOnClickListener(this)
         cv_Activities?.setOnClickListener(this)
         cv_Authors?.setOnClickListener(this)
         cv_Books?.setOnClickListener(this)
         cv_CoversPhotos?.setOnClickListener(this)
         cv_Exits?.setOnClickListener(this)
+        initView()
         return view;
     }
 
+    fun initView(){
+       /* Objects.requireNonNull((activity as AppCompatActivity?)!!.supportActionBar)
+            ?.setTitle("Store")*/
+        toolbar?.setTitle("Home")
+        toolbar?.setTitleTextColor(resources.getColor(R.color.colorWhite))
+
+    }
     override fun onClick(p0: View?) {
         val ids = p0?.id
         when(ids){
