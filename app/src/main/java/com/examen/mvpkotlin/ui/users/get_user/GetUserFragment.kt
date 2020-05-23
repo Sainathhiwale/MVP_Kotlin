@@ -18,85 +18,107 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import cn.pedant.SweetAlert.SweetAlertDialog
 import com.examen.kotlinretrofit.utils.NetworkUtils
+import com.examen.mvpkotlin.R
+import com.examen.mvpkotlin.data.model.GetUserDtlsInfo
 import com.examen.mvpkotlin.utils.AppConstants
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.user_list.*
 import java.util.*
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class GetUserFragment : Fragment() {
-    var const_userDtlsLayout: ConstraintLayout ? = null
-    var btn_Cancel :Button ? = null
-    var btn_Update :Button ? = null
-    var et_UserId: EditText ? = null
-    var tv_UserId: TextView ? = null
-    var tv_UserName: TextView ? = null
-    var tv_UserPassword: TextView ? = null
+class GetUserFragment : Fragment(), UserContract.UserView {
+    var const_userDtlsLayout: ConstraintLayout? = null
+    var btn_Cancel: Button? = null
+    var btn_Update: Button? = null
+    var et_UserId: EditText? = null
+    var tv_UserId: TextView? = null
+    var tv_UserName: TextView? = null
+    var tv_UserPassword: TextView? = null
     var toolbar: Toolbar? = null
-    private var presenter:UserContractPresenterImpl ? = null
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+    private var presenter: UserContractPresenterImpl? = null
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view:View =inflater.inflate(R.layout.fragment_get_user, container, false)
-        btn_Cancel = view.findViewById(R.id.et_UserId) as Button
-        btn_Update = view.findViewById(R.id.et_UserId) as Button
-        et_UserId = view.findViewById(R.id.et_UserId) as EditText
-        tv_UserId = view.findViewById(R.id.et_UserId) as TextView
-        tv_UserName = view.findViewById(R.id.et_UserId) as TextView
-        tv_UserPassword = view.findViewById(R.id.et_UserId) as TextView
+        val view: View = inflater.inflate(R.layout.fragment_get_user, container, false)
+        btn_Cancel = view.findViewById(R.id.btn_Cancel)
+        btn_Update = view.findViewById(R.id.btn_Update)
+        et_UserId = view.findViewById(R.id.et_UserId)
+        tv_UserId = view.findViewById(R.id.tv_UserId)
+        tv_UserName = view.findViewById(R.id.tv_UserName)
+        tv_UserPassword = view.findViewById(R.id.tv_Password)
         toolbar = view.findViewById(R.id.toolbar)
         const_userDtlsLayout = view.findViewById(R.id.const_userDtlsLayout)
         initView()
+        initCall()
         return view
     }
+
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun initView(){
+    fun initView(): Boolean {
         toolbar!!.setTitle("Get User")
         toolbar?.setTitleTextColor(resources.getColor(R.color.colorWhite))
-        et_UserId!!.setOnKeyListener(View.OnKeyListener { view, keyCode, keyEvent ->
+
+       et_UserId!!.setOnKeyListener(View.OnKeyListener { view: View, keyCode: Int, keyEvent: KeyEvent ->
             if (keyEvent.action == KeyEvent.ACTION_DOWN) {
                 when (keyCode) {
-                    KeyEvent.KEYCODE_BACK, KeyEvent.KEYCODE_DPAD_CENTER -> return@OnKeyListener true
-                    KeyEvent.KEYCODE_ENTER -> {
-                        (Objects.requireNonNull(Objects.requireNonNull(activity)!!.getSystemService(Context.INPUT_METHOD_SERVICE)) as InputMethodManager)
-                            .hideSoftInputFromWindow(et_UserId!!.getWindowToken(), 0)
-                        if (et_UserId!!.getText().toString().trim({ it <= ' ' }) != AppConstants.EMPTY) {
-                             if (NetworkUtils().isNetworkConnected(activity))
-                                 presenter =
-                                     UserContractPresenterImpl(this@GetUserFragment,
-                                         GetUserIntractorImpl(activity,  et_UserId!!.text.toString().trim().toInt()))
-                               /*  presenter = UserContractPresenterImpl(GetUserFragment::,GetUserIntractorImpl(activity,et_UserId.text.toString().trim()))
-                                presenter!!.validateUserDtslFromServer()*/
-                            } else {
-                                val snackbar = Snackbar.make(const_userDtlsLayout!!, "Please check internet connection try again!", Snackbar.LENGTH_SHORT)
-                                val view1 = snackbar.view
-                                val textView = view1.findViewById<View>(com.google.android.material.R.id.snackbar_text) as TextView
-                                textView.setTextColor(Color.RED)
-                                snackbar.show()
-                            }
-                        } else {
-                            SweetAlertDialog(activity, SweetAlertDialog.ERROR_TYPE)
-                                .setTitleText("Oops..")
-                                .setContentText("Please scan Barcode!")
-                                .setConfirmClickListener { sDialog ->
-                                    et_ScnItemBrCode.setText("")
-                                    et_ScnItemBrCode.requestFocus()
-                                    sDialog.dismissWithAnimation()
-                                }
-                                .show()
+                    R.id.et_UserId -> {
+                        if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                         if (NetworkUtils().isNetworkConnected(activity)){
+                             if (et_UserId!!.text.toString().trim().equals("")){
+                                 presenter = UserContractPresenterImpl(this@GetUserFragment,GetUserIntractorImpl(activity,et_UserId!!.text.toString().trim().toInt()))
+                                 presenter!!.validateUserDtslFromServer()
+                             }else{
+                                 SweetAlertDialog(activity,SweetAlertDialog.ERROR_TYPE).setTitleText("Oops..").setContentText("Please Enter User Id!").setConfirmClickListener { mDialog ->
+                                     et_UserId!!.setText("")
+                                     et_UserId!!.requestFocus() }
+                             }
+                         }else{
+                             val snackbar:Snackbar = Snackbar.make(const_userDtlsLayout!!,"Please check internet connection try again!",Snackbar.LENGTH_SHORT)
+                             val view1 : View = snackbar.view
+                             val textView = view1.findViewById<View>(com.google.android.material.R.id.text) as TextView
+                             textView.setTextColor(Color.RED)
+                             snackbar.show()
+                         }
                         }
-                        return@OnKeyListener true
                     }
-                    KeyEvent.KEYCODE_DPAD_RIGHT -> return@OnKeyListener true
                 }
             }
-            false
+            return@OnKeyListener true
         })
+        return false
+    }
 
+    fun initCall(){
+        presenter = UserContractPresenterImpl(this@GetUserFragment,GetUserIntractorImpl(activity,1))
+        presenter!!.validateUserDtslFromServer()
+    }
+
+
+    override fun setUserDtlsInfo(getuserDtsl: GetUserDtlsInfo?) {
+       if (getuserDtsl!= null){
+           tv_UserId!!.setText(getuserDtsl.iD)
+           tv_UserName!!.setText(getuserDtsl.userName)
+           tv_Password!!.setText(getuserDtsl.password)
+       }else{
+           val snackbar:Snackbar = Snackbar.make(const_userDtlsLayout!!,"Something went wrong!",Snackbar.LENGTH_SHORT)
+           val view1 : View = snackbar.view
+           val textView = view1.findViewById<View>(com.google.android.material.R.id.text) as TextView
+           textView.setTextColor(Color.RED)
+           snackbar.show()
+       }
+    }
+
+    override fun onResponseFailure(throwable: Throwable) {
+        val snackbar:Snackbar = Snackbar.make(const_userDtlsLayout!!,""+throwable.message,Snackbar.LENGTH_SHORT)
+        val view1 : View = snackbar.view
+        val textView = view1.findViewById<View>(com.google.android.material.R.id.text) as TextView
+        textView.setTextColor(Color.RED)
+        snackbar.show()
     }
 
 }

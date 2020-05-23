@@ -23,7 +23,7 @@ class GetUserIntractorImpl : UserContract.UserIntractor {
 
     override fun getUserDtlsInfoData(onUserDtlsFinishedListener: UserContract.UserIntractor.OnUserDtlsFinishedListener) {
         sweetAlertDialog = CommonUtils().startCustomProgressBarDialog(context,"User Data is Loading")
-      val apiInterface : ApiInterface = RetrofitInstance.buildService(ApiInterface::class.java)
+       val apiInterface : ApiInterface = RetrofitInstance.buildService(ApiInterface::class.java)
         val getUserCall : Call<GetUserDtlsInfo> = apiInterface.getUserDtls(id)
         getUserCall.enqueue(object : Callback<GetUserDtlsInfo> {
             override fun onFailure(call: Call<GetUserDtlsInfo>, t: Throwable) {

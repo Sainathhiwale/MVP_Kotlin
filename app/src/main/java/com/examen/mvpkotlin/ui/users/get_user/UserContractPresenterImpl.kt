@@ -11,6 +11,7 @@ class UserContractPresenterImpl : UserContract.UserPresenter,UserContract.UserIn
         this.userDtlsIntractor = userDtlsIntractor
     }
 
+
     override fun onDestroy() {
         userdtlsView = null
     }
