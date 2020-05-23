@@ -6,13 +6,14 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentActivity
 
 class NetworkUtils {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-    fun isNetworkConnected(context: Context): Boolean{
+    fun isNetworkConnected(context: FragmentActivity?): Boolean{
         var result = false
-        (context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
+        (context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).apply {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 result = isCapableNetwork(this,this.activeNetwork)
             } else {
@@ -38,5 +39,7 @@ class NetworkUtils {
         }
         return false
     }
+
+
 
 }

@@ -25,4 +25,8 @@
     <string name="delete_user">Delete User</string>
     <string name="update_user">Update User</string>
     <string name="get_user">Get User</string>
+    <string name="enter_userid">Enter User ID</string>
+    <string name="ID">User ID</string>
+    <string name="cancel">Cancel</string>
+    <string name="update">Update User</string>
 </resources>

@@ -1,12 +1,11 @@
 package com.examen.mvpkotlin.data.network
 
+import com.examen.mvpkotlin.data.model.GetUserDtlsInfo
 import com.examen.mvpkotlin.data.model.LoginRequest
 import com.examen.mvpkotlin.data.model.UserListInfo
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
+
 
 interface ApiInterface {
 
@@ -16,5 +15,8 @@ interface ApiInterface {
 
     @GET(EndPoints.USERLIST)
     fun getUserList(): Call<UserListInfo>
+
+    @GET(EndPoints.GETUSER)
+    fun getUserDtls(@Query("id") id: Int?):Call<GetUserDtlsInfo>
 
 }
